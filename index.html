@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hello World</title>
+    <script src="./js/react.development.js"></script>
+    <script src="./js/react-dom.development.js"></script>
+
+    <script src="./js/babel.min.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/babel">
+    class Hall extends React.Component{
+    
+ render(){
+   if(this.props.value.date.getSeconds()%4==0){
+     var r=(Math.random()*1000)%256;
+     var g=(Math.random()*1000)%256;
+     var b=(Math.random()*1000)%256;
+     var styleObject={backgroundColor:"rgb("+r+","+g+","+b+")"};
+     
+   }
+   return(<div style={styleObject}>{this.props.value.date.toLocaleTimeString()}</div>);
+ }
+    }
+class Home extends React.Component{
+  /* getInitialState(){
+       this.state={date:new Date()}
+   }*/
+   constructor(props) {
+    super(props);
+    this.state = {date: new Date()};
+  }
+ tick(){
+       this.setState({
+           date: new Date()
+       });
+   }
+   componentDidMount() {
+    this.timerID = setInterval(
+      () => this.tick(),
+      1000
+    );
+  }
+  componentWillUnmount() {
+    clearInterval(this.timerID);
+  }
+        render(){return(<Hall value={this.state}/>);}
+}
+
+  ReactDOM.render(
+   <Home/>,
+    document.getElementById('root')
+  );
+
+    </script>
+    
+  </body>
+</html>
